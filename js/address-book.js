@@ -34,3 +34,52 @@ function sortObjArray(objArray, propName) {
     });
 } //sortObjArray()
 
+
+
+function render(entries, template, addressBook) {
+    var instance;
+    addressBook.empty();
+    $.each(Employees.entries, function() {
+        instance = template.clone();
+        for(prop in this){
+            if(prop === 'pic'){
+                instance.find('.pic').attr({
+                    src: this[prop],
+                    alt: 'Picture of ' + this.first + ' ' + this.last
+                });
+            }else{
+                instance.find('.' + prop).html(this[prop]);
+            }
+        instance.removeClass('template');
+        addressBook.append(instance);
+       
+        }
+
+    });
+}
+
+$(function() {
+     sortObjArray(Employees.entries, 'last');
+     render(Employees, $('.template'), $('.address-book'));
+    
+
+    var sortBtn = $(this);
+    $('sortBtn').click(function() {
+        if(sortBtn.attr('data-sortby') == 'title') {
+            sortObjArray(Employees.entries, 'title');
+            render(Employees, $('.template'), $('.address-book'));
+        }else if(sortBtn.attr('data-sortby') == 'dept') {
+            sortObjArray(Employees.entries, 'dept');
+            render(Employees, $('.template'), $('.address-book'));
+        }else {
+            sortObjArray(Employees.entries, 'last');
+            render(Employees, $('.template'), $('.address-book'));
+
+        }
+    });
+    
+    
+
+
+})
+
