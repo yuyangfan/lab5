@@ -35,9 +35,29 @@ function sortObjArray(objArray, propName) {
 } //sortObjArray()
 
 
+$(function() {
+   
+    sortObjArray(Employees.entries, 'last');
+    render(Employees, $('.template'), $('.address-book'));
+    
+    $('.btn').click(function() {
+        $('.btn').siblings('.active').removeClass('active');
+        var sortBtn = $(this);
+        var sortAttr = sortBtn.attr('data-sortby');
+         
+        sortObjArray(Employees.entries, sortAttr);
+        render(Employees, $('.template'), $('.address-book'));
+        
+        sortBtn.addClass('active');
+    });
+    
+    
+
+})
 
 function render(entries, template, addressBook) {
     var instance;
+    addressBook.hide();
     addressBook.empty();
     $.each(Employees.entries, function() {
         instance = template.clone();
@@ -52,34 +72,11 @@ function render(entries, template, addressBook) {
             }
         instance.removeClass('template');
         addressBook.append(instance);
-       
+        
         }
-
     });
+    addressBook.fadeIn();
 }
 
-$(function() {
-     sortObjArray(Employees.entries, 'last');
-     render(Employees, $('.template'), $('.address-book'));
-    
 
-    var sortBtn = $(this);
-    $('sortBtn').click(function() {
-        if(sortBtn.attr('data-sortby') == 'title') {
-            sortObjArray(Employees.entries, 'title');
-            render(Employees, $('.template'), $('.address-book'));
-        }else if(sortBtn.attr('data-sortby') == 'dept') {
-            sortObjArray(Employees.entries, 'dept');
-            render(Employees, $('.template'), $('.address-book'));
-        }else {
-            sortObjArray(Employees.entries, 'last');
-            render(Employees, $('.template'), $('.address-book'));
-
-        }
-    });
-    
-    
-
-
-})
 
