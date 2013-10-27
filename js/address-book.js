@@ -51,7 +51,12 @@ $(function() {
         sortBtn.addClass('active');
     });
     
-    
+     $('.sort-ui .btn').popover({
+        content: 'Click to Resort',
+        container: 'body',
+        trigger: 'hover',
+        placement: 'bottom'
+    });
 
 })
 
